@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <option name="separateProdTestSources" value="true" />
+    <profile name="sbt 1" modules="StudentService,StudentService.main,StudentService.test,bootcamp-student-service-scala,bootcamp-student-service-scala.main,bootcamp-student-service-scala.test,play-with-codex-1,play-with-codex-1.main,play-with-codex-1.test,student-service,student-service.main,student-service.test" />
+  </component>
+</project>
