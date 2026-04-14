@@ -66,6 +66,24 @@ DELETE /students/{id}
 }
 ~~~
 
+## Create a Student
+
+The service uses in-memory storage, so students are cleared after application restart.
+
+~~~bash
+curl -X POST http://localhost:8080/students \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Ivan",
+    "lastName": "Petrenko",
+    "email": "ivan.petrenko@example.com"
+  }'
+~~~
+
+~~~bash
+curl http://localhost:8080/students
+~~~
+
 ## Project Goal
 
 This project is used as a minimal Student Service for practicing:
