@@ -10,6 +10,9 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-ember-server" % "0.23.33",
       "org.http4s" %% "http4s-dsl" % "0.23.33",
+      "org.http4s" %% "http4s-circe" % "0.23.33",
+
+      "io.circe" %% "circe-generic" % "0.14.15",
 
       "com.github.pureconfig" %% "pureconfig-generic-scala3" % "0.17.9",
 

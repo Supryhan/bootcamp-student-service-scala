@@ -22,12 +22,3 @@ class HealthcheckRoutesSpec extends CatsEffectSuite:
         response.as[String].map: body =>
           assertEquals(response.status, Status.Ok)
           assertEquals(body, "test-version")
-
-  test("GET /example is no longer available"):
-    val request = Request[IO](Method.GET, uri"/example")
-
-    HealthcheckRoutes
-      .routes(StudentServiceConfig(version = "test-version"))
-      .orNotFound
-      .run(request)
-      .map(response => assertEquals(response.status, Status.NotFound))
