@@ -17,6 +17,7 @@ class StudentRoutesSpec extends CatsEffectSuite:
   private given Logger[IO] = Slf4jLogger.getLogger[IO]
 
   private val aliceId = StudentId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
+  private val missingId = StudentId(UUID.fromString("00000000-0000-0000-0000-000000000002"))
 
   private val alice = Student(
     id = aliceId,
@@ -100,3 +101,40 @@ class StudentRoutesSpec extends CatsEffectSuite:
     yield
       assertEquals(response.status, Status.NoContent)
       assertEquals(found, None)
+
+  test("GET /students/{id} returns NotFound for a missing student"):
+    val request = Request[IO](Method.GET, uri"/students/00000000-0000-0000-0000-000000000002")
+
+    for
+      repository <- InMemoryStudentRepository.create
+      response <- StudentRoutes
+        .routes(DefaultStudentService(repository))
+        .orNotFound
+        .run(request)
+    yield assertEquals(response.status, Status.NotFound)
+
+  test("PUT /students/{id} returns NotFound for a missing student"):
+    val request = Request[IO](Method.PUT, uri"/students/00000000-0000-0000-0000-000000000002")
+      .withEntity(UpdateStudentRequest("Alicia", "Green", "alicia.green@example.com"))
+
+    for
+      repository <- InMemoryStudentRepository.create
+      response <- StudentRoutes
+        .routes(DefaultStudentService(repository))
+        .orNotFound
+        .run(request)
+      found <- repository.findById(missingId)
+    yield
+      assertEquals(response.status, Status.NotFound)
+      assertEquals(found, None)
+
+  test("DELETE /students/{id} returns NotFound for a missing student"):
+    val request = Request[IO](Method.DELETE, uri"/students/00000000-0000-0000-0000-000000000002")
+
+    for
+      repository <- InMemoryStudentRepository.create
+      response <- StudentRoutes
+        .routes(DefaultStudentService(repository))
+        .orNotFound
+        .run(request)
+    yield assertEquals(response.status, Status.NotFound)
