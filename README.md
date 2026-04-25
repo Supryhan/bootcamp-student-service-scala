@@ -94,3 +94,7 @@ This project is used as a minimal Student Service for practicing:
 - logging
 - testing
 - further extension in future practical tasks
+
+## Documentation
+
+- [Student Service Requirements and Limitations](docs/requirements.md)
